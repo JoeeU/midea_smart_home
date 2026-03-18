@@ -49,16 +49,16 @@ class MideaFanEntity(MideaBaseEntity, FanEntity):
         config: dict,
         model: str = None,
     ):
-        super().__init__(coordinator, device_id, device_type, sn, sn8, device_name, fan_id, model)
+        super().__init__(
+            coordinator, device_id, device_type, sn, sn8, device_name, fan_id, model,
+            platform_name="fan", config=config
+        )
         self._fan_id = fan_id
-        self._config = config
-        self._attr_unique_id = f"fan.midea_{device_id}_{fan_id}"
-        self._attr_translation_key = config.get("translation_key", fan_id)
-        self._key_power = config.get("power")
-        self._key_preset_modes = config.get("preset_modes", {})
-        speeds_config = config.get("speeds", [])
-        self._key_oscillate = config.get("oscillate")
-        self._key_directions = config.get("directions", {})
+        self._key_power = self._config.get("power")
+        self._key_preset_modes = self._config.get("preset_modes", {})
+        speeds_config = self._config.get("speeds", [])
+        self._key_oscillate = self._config.get("oscillate")
+        self._key_directions = self._config.get("directions", {})
 
         if isinstance(speeds_config, list) and len(speeds_config) > 0:
             if isinstance(speeds_config[0], dict) and "key" in speeds_config[0]:
@@ -162,17 +162,17 @@ class MideaFanEntity(MideaBaseEntity, FanEntity):
         new_status = {}
         if preset_mode is not None and self._key_preset_modes:
             mode_config = self._key_preset_modes.get(preset_mode, {})
-            if mode_config:
-                new_status = {k: v for k, v in mode_config.items() if k != "speeds"}
+            if "mode" in mode_config:
+                new_status["mode"] = mode_config["mode"]
+            if "speeds" in mode_config:
+                self._current_speeds = mode_config["speeds"]
+                self._attr_speed_count = len(self._current_speeds)
+            else:
+                self._current_speeds = self._key_speeds
+                self._attr_speed_count = len(self._current_speeds) if self._current_speeds else 0
 
-                if "speeds" in mode_config:
-                    self._current_speeds = mode_config["speeds"]
-                    self._attr_speed_count = len(self._current_speeds)
-                    if len(self._current_speeds) >= 1:
-                        new_status.update(self._current_speeds[0])
-                else:
-                    self._current_speeds = self._key_speeds
-                    self._attr_speed_count = len(self._current_speeds) if self._current_speeds else 0
+            if "speeds" in mode_config and len(mode_config["speeds"]) == 1:
+                new_status.update(mode_config["speeds"][0])
 
         if percentage is not None and self._current_speeds:
             if percentage == 0:
@@ -222,10 +222,21 @@ class MideaFanEntity(MideaBaseEntity, FanEntity):
                 self._current_speeds = self._key_speeds
                 self._attr_speed_count = len(self._current_speeds) if self._current_speeds else 0
 
-            new_status = {k: v for k, v in mode_config.items() if k != "speeds"}
+            new_status = {}
+            if "mode" in mode_config:
+                new_status["mode"] = mode_config["mode"]
 
             if "speeds" in mode_config and len(mode_config["speeds"]) >= 1:
                 new_status.update(mode_config["speeds"][0])
+
+            if "fresh_air_mode" in mode_config:
+                new_status["fresh_air_mode"] = mode_config["fresh_air_mode"]
+
+            if "exhaust_strength" in mode_config:
+                new_status["exhaust_strength"] = mode_config["exhaust_strength"]
+
+            if "wind_strength" in mode_config:
+                new_status["wind_strength"] = mode_config["wind_strength"]
 
             await self.coordinator.async_set_controls(new_status)
 
