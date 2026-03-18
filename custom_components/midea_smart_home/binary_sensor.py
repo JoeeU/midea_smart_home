@@ -1,5 +1,7 @@
 import logging
 
+from typing import cast
+
 from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     BinarySensorDeviceClass,
@@ -153,4 +155,4 @@ class MideaBinarySensorEntity(MideaBaseEntity, BinarySensorEntity):
 
         if isinstance(value, bool):
             return value
-        return value == 1 or value == "on" or value == "true"
+        return value == 1 or value == "on" or value == "true" or cast("bool", value)
