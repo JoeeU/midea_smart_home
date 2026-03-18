@@ -1,5 +1,6 @@
 from homeassistant.const import Platform, PERCENTAGE, UnitOfTemperature, UnitOfTime
 from homeassistant.components.sensor import SensorStateClass, SensorDeviceClass
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.switch import SwitchDeviceClass
 
 DEVICE_MAPPING = {
@@ -193,6 +194,14 @@ DEVICE_MAPPING = {
     "default_pipeline_machine": {
         "rationale": ["off", "on"],
         "entities": {
+            Platform.BINARY_SENSOR: {
+                "sleep": {
+                    "device_class": BinarySensorDeviceClass.OPENING,
+                    "translation_key": "screen_status",
+                    "on_value": "off",
+                    "off_value": "on"
+                }
+            },
             Platform.SWITCH: {
                 "germicidal": {
                     "device_class": SwitchDeviceClass.SWITCH

@@ -2,6 +2,9 @@
     "entity": {
         "binary_sensor": {
             "bucket_water_overheating": { "default": "mdi:thermometer-alert" },
+            "burning_state": { "default": "mdi:fire" },
+            "b7_left_status": { "default": "mdi:stove" },
+            "b7_right_status": { "default": "mdi:stove" },
             "detergent_lack": { "default": "mdi:water-alert" },
             "device_status": { "default": "mdi:information" },
             "door_opened": { "default": "mdi:door-open" },
@@ -11,6 +14,7 @@
             "freezer_door_state": { "default": "mdi:fridge-bottom" },
             "lack_water": { "default": "mdi:water-off" },
             "change_water": { "default": "mdi:water-sync" },
+            "screen_status": { "default": "mdi:television-ambient-light" },
             "softener_lack": { "default": "mdi:water-alert" },
             "storage_door_state": { "default": "mdi:fridge-top" },
             "water_lack": { "default": "mdi:water-off" },

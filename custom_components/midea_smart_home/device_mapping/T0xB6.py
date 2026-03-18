@@ -1,4 +1,5 @@
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.const import Platform, UnitOfPressure, UnitOfTime, UnitOfElectricPotential
 from homeassistant.components.switch import SwitchDeviceClass
 
@@ -19,6 +20,18 @@ DEVICE_MAPPING = {
             ],
         },
         "entities": {
+            Platform.BINARY_SENSOR: {
+                "b7_left_status": {
+                    "device_class": BinarySensorDeviceClass.OPENING,
+                    "on_value": "working",
+                    "off_value": "power_off"
+                },
+                "b7_right_status": {
+                    "device_class": BinarySensorDeviceClass.OPENING,
+                    "on_value": "working",
+                    "off_value": "power_off"
+                }
+            },
             Platform.SWITCH: {
                 "power": {
                     "device_class": SwitchDeviceClass.SWITCH,
@@ -51,12 +64,6 @@ DEVICE_MAPPING = {
                 }
             },
             Platform.SENSOR: {
-                "b7_left_status": {
-                    "device_class": SensorDeviceClass.ENUM,
-                },
-                "b7_right_status": {
-                    "device_class": SensorDeviceClass.ENUM,
-                },
                 "b7_vbattery":{
                     "device_class": SensorDeviceClass.VOLTAGE,
                     "unit_of_measurement": UnitOfElectricPotential.VOLT,

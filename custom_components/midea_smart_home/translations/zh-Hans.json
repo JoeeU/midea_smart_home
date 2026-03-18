@@ -65,6 +65,15 @@
       "bucket_water_overheating": {
         "name": "桶内水温过高"
       },
+      "burning_state": {
+        "name": "燃烧状态"
+      },
+      "b7_left_status": {
+        "name": "左灶状态"
+      },
+      "b7_right_status": {
+        "name": "右灶状态"
+      },
       "detergent_lack": {
         "name": "洗涤剂状态"
       },
@@ -79,6 +88,9 @@
       },
       "failed_device": {
         "name": "初始化失败"
+      },
+      "screen_status": {
+        "name": "屏幕状态"
       },
       "softener_lack": {
         "name": "柔顺剂状态"

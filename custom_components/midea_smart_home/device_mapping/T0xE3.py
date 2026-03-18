@@ -1,11 +1,18 @@
 from homeassistant.const import Platform, UnitOfTemperature, PRECISION_WHOLE
 from homeassistant.components.sensor import SensorStateClass, SensorDeviceClass
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.switch import SwitchDeviceClass
 
 DEVICE_MAPPING = {
     "default_gas_water_heater": {
         "rationale": ["off", "on"],
         "entities": {
+            Platform.BINARY_SENSOR: {
+                "gas_lift_precent": {
+                    "device_class": BinarySensorDeviceClass.RUNNING,
+                    "translation_key": "burning_state",
+                }
+            },
             Platform.WATER_HEATER: {
                 "water_heater": {
                     "power": "power",
