@@ -198,8 +198,7 @@ DEVICE_MAPPING = {
                 "sleep": {
                     "device_class": BinarySensorDeviceClass.OPENING,
                     "translation_key": "screen_status",
-                    "on_value": "off",
-                    "off_value": "on"
+                    "rationale": ["on", "off"]
                 }
             },
             Platform.SWITCH: {

@@ -23,13 +23,11 @@ DEVICE_MAPPING = {
             Platform.BINARY_SENSOR: {
                 "b7_left_status": {
                     "device_class": BinarySensorDeviceClass.OPENING,
-                    "on_value": "working",
-                    "off_value": "power_off"
+                    "rationale": ["power_off", "working"]
                 },
                 "b7_right_status": {
                     "device_class": BinarySensorDeviceClass.OPENING,
-                    "on_value": "working",
-                    "off_value": "power_off"
+                    "rationale": ["power_off", "working"]
                 }
             },
             Platform.SWITCH: {
